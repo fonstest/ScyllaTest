@@ -75,8 +75,8 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 
 	DWORD_PTR iatStart = 0;
 	DWORD iatSize = 0;
-	WCHAR *originalExe=0; // Path of the original PE which as launched the current process
-	WCHAR *dumpFile = L"./tmp_output_file.exe";  //Path of the file where the process will be dumped during the Dumping Process
+	WCHAR originalExe[MAX_PATH]; // Path of the original PE which as launched the current process
+	WCHAR *dumpFile = L"./tmp_dump_file.exe";  //Path of the file where the process will be dumped during the Dumping Process
 
 	//getting the Base Address
 	DWORD_PTR hMod = GetExeModuleBase(pid);
@@ -95,20 +95,19 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 	}
 	INFO("Original Exe Path: %S\n",originalExe);
 		
-	/*
 	success = ScyllaDumpProcessW(pid,originalExe,hMod,oep,dumpFile);
 	if(!success){
-		ERRORE("Error Dumping  Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S",pid,originalExe,hMod,oep,dumpFile);
+		ERRORE("Error Dumping  Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S \n",pid,originalExe,hMod,oep,dumpFile);
 		return;
 	}
-	INFO("Successfully dumped Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S",pid,originalExe,hMod,oep,dumpFile);
+	INFO("Successfully dumped Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S \n",pid,originalExe,hMod,oep,dumpFile);
 		
 	
 	
 	//Searching the IAT
 	int error = ScyllaIatSearch(pid, &iatStart, &iatSize, hMod + 0x00001028, TRUE);
 	if(error){
-		ERRORE("(IAT SEARCH) error %d",error);
+		ERRORE("(IAT SEARCH) error %d \n",error);
 		return;
 	}
 	INFO("(IAT SEARCH) iatStart %X iatSize %X\n",iatStart, iatSize);
@@ -122,21 +121,18 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 	}
 	INFO("[IAT FIX] Success");
 	
-	*/
 }
 
 BOOL GetFilePathFromPID(DWORD dwProcessId, WCHAR *filename){
 	
 	HANDLE processHandle = NULL;
-	
 
-	processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, 1234);
+	processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, dwProcessId);
 	if (processHandle) {
 	if (GetModuleFileNameEx(processHandle,NULL, filename, MAX_PATH) == 0) {
+    //if (GetProcessImageFileName(processHandle, filename, MAX_PATH) == 0) {
 		ERRORE("Failed to get module filename.\n");
 		return false;
-	} else {
-		INFO("Module filename is: %S", filename);
 	}
 	CloseHandle(processHandle);
 	} else {

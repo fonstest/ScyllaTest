@@ -1,4 +1,4 @@
-﻿Compilazione avviata 9/29/2015 11:11:46 AM.
+﻿Compilazione avviata 10/2/2015 7:07:49 AM.
 Progetto "C:\Users\phate\Desktop\Visual Studio Projects\ScyllaTest\ScyllaTest\ScyllaTest.vcxproj" sul nodo 2 (destinazioni: build).
 InitializeBuildStatus:
   Creazione di "Debug\ScyllaTest.unsuccessfulbuild". È stato specificato "AlwaysCreate".
@@ -6,15 +6,12 @@ ClCompile:
   Tutti gli output sono aggiornati.
   C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\ScyllaTest.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ScyllaTest.cpp
   ScyllaTest.cpp
-c:\users\phate\desktop\visual studio projects\scyllatest\scyllatest\debug.h(18): warning C4005: 'ERROR': ridefinizione macro
-          c:\program files\microsoft sdks\windows\v7.0a\include\wingdi.h(112): vedere la precedente definizione di 'ERROR'
 ManifestResourceCompile:
   Tutti gli output sono aggiornati.
 Link:
   C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\phate\Desktop\Visual Studio Projects\ScyllaTest\Debug\ScyllaTest.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\ScyllaTest.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\phate\Desktop\Visual Studio Projects\ScyllaTest\Debug\ScyllaTest.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\phate\Desktop\Visual Studio Projects\ScyllaTest\Debug\ScyllaTest.lib" /MACHINE:X86 Debug\ScyllaTest.exe.embed.manifest.res
   Debug\ScyllaTest.obj
   Debug\stdafx.obj
-  LINK : C:\Users\phate\Desktop\Visual Studio Projects\ScyllaTest\Debug\ScyllaTest.exe non trovato o non compilato dall'ultimo collegamento incrementale; verrà eseguito il collegamento completo
 Manifest:
   C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\ScyllaTest.exe.embed.manifest" /manifest Debug\ScyllaTest.exe.intermediate.manifest
   Tutti gli output sono aggiornati.
@@ -28,4 +25,4 @@ Compilazione progetto "C:\Users\phate\Desktop\Visual Studio Projects\ScyllaTest\
 
 Compilazione completata.
 
-Tempo trascorso 00:00:05.16
+Tempo trascorso 00:00:02.73

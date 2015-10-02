@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "debug.h"
+#include <psapi.h> 
 
 
 
@@ -18,6 +19,7 @@ def_ScyllaDumpProcessW  ScyllaDumpProcessW = 0;
 
 
 void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile);
+WCHAR * GetFilePathFromPID(DWORD dwProcessId);
 DWORD_PTR GetExeModuleBase(DWORD dwProcessId);
 
 
@@ -110,6 +112,26 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 	
 }
 
+WCHAR * GetFilePathFromPID(DWORD dwProcessId){
+	
+	HANDLE processHandle = NULL;
+	WCHAR filename[MAX_PATH];
+
+	processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, 1234);
+	if (processHandle != NULL) {
+	if (GetModuleFileNameEx(processHandle, NULL, filename, MAX_PATH) == 0) {
+		ERRORE("Failed to get module filename.");
+	} else {
+		INFO("Module filename is: %S", filename);
+	}
+	CloseHandle(processHandle);
+	} else {
+		ERRORE("Failed to open process." );
+	}
+
+	return filename;
+	
+}
 
 
 DWORD_PTR GetExeModuleBase(DWORD dwProcessId)

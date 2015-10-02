@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "debug.h"
-#include <psapi.h> 
+
 
 
 
@@ -19,7 +19,7 @@ def_ScyllaDumpProcessW  ScyllaDumpProcessW = 0;
 
 
 void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile);
-WCHAR * GetFilePathFromPID(DWORD dwProcessId);
+BOOL GetFilePathFromPID(DWORD dwProcessId, WCHAR *filename);
 DWORD_PTR GetExeModuleBase(DWORD dwProcessId);
 
 
@@ -66,14 +66,17 @@ int wmain(int argc, wchar_t *argv[])
 
 
 
+
+
+
 void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 {
 	INFO("----------------IAT Fixing Test----------------\n");
 
 	DWORD_PTR iatStart = 0;
 	DWORD iatSize = 0;
-	WCHAR *inputDumpFile = L"C:\\Users\\phate\\Desktop\\MessageBox_packed.exe";
-	WCHAR *dumpFile = L"./tmp_output_file.exe";  //File where the process will be dumped during the Dumping Process
+	WCHAR *originalExe=0; // Path of the original PE which as launched the current process
+	WCHAR *dumpFile = L"./tmp_output_file.exe";  //Path of the file where the process will be dumped during the Dumping Process
 
 	//getting the Base Address
 	DWORD_PTR hMod = GetExeModuleBase(pid);
@@ -82,13 +85,23 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 	}
 	INFO("GetExeModuleBase %X\n", hMod);
 
+	
+
 	//Dumping Process
-	BOOL success = ScyllaDumpProcessW(pid,inputDumpFile,hMod,oep,dumpFile);
+	BOOL success = GetFilePathFromPID(pid,originalExe);
 	if(!success){
-		ERRORE("Error Dumping  Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S",pid,inputDumpFile,hMod,oep,dumpFile);
+		ERRORE("Error in getting original Path from Pid: %d\n",pid);
 		return;
 	}
-	INFO("Successfully dumped Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S",pid,inputDumpFile,hMod,oep,dumpFile);
+	INFO("Original Exe Path: %S\n",originalExe);
+		
+	/*
+	success = ScyllaDumpProcessW(pid,originalExe,hMod,oep,dumpFile);
+	if(!success){
+		ERRORE("Error Dumping  Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S",pid,originalExe,hMod,oep,dumpFile);
+		return;
+	}
+	INFO("Successfully dumped Pid: %d, FileToDump: %S, Hmod: %X, oep: %X, output: %S",pid,originalExe,hMod,oep,dumpFile);
 		
 	
 	
@@ -109,27 +122,29 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 	}
 	INFO("[IAT FIX] Success");
 	
-	
+	*/
 }
 
-WCHAR * GetFilePathFromPID(DWORD dwProcessId){
+BOOL GetFilePathFromPID(DWORD dwProcessId, WCHAR *filename){
 	
 	HANDLE processHandle = NULL;
-	WCHAR filename[MAX_PATH];
+	
 
 	processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, 1234);
-	if (processHandle != NULL) {
-	if (GetModuleFileNameEx(processHandle, NULL, filename, MAX_PATH) == 0) {
-		ERRORE("Failed to get module filename.");
+	if (processHandle) {
+	if (GetModuleFileNameEx(processHandle,NULL, filename, MAX_PATH) == 0) {
+		ERRORE("Failed to get module filename.\n");
+		return false;
 	} else {
 		INFO("Module filename is: %S", filename);
 	}
 	CloseHandle(processHandle);
 	} else {
-		ERRORE("Failed to open process." );
+		ERRORE("Failed to open process.\n" );
+		return false;
 	}
 
-	return filename;
+	return true;
 	
 }
 

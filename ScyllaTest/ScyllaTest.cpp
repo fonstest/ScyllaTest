@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "debug.h"
+#include "Log.h"
 
 
 
@@ -45,12 +46,14 @@ void LoadScyllaLibrary(){
 
 }
 
-int wmain(int argc, wchar_t *argv[])
-{	
+int wmain(int argc, wchar_t *argv[]){
+
+	
 	if(argc < 4){
 		INFO("ScyllaTest.exe <pid> <oep> <output_file>");
 		return -1;
 	}
+	INFO("argv0 %S argv1 %S argv2 %S argv3 %S",argv[0],argv[1],argv[2],argv[3]);
 	DWORD pid = _wtoi(argv[1]);
 	// DWORD_PTR oep  = _wtoi(argv[2]);// Works if passed and integer base 10 value
 	DWORD_PTR oep = wcstoul(argv[2],NULL,16);

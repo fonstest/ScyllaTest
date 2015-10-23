@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="File di origine\Helpers">
+      <UniqueIdentifier>{8aec8703-7965-4ca6-af08-d03339f3b656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di intestazione\Helpers">
+      <UniqueIdentifier>{21b90408-245f-461d-afb2-da35c36000d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -27,6 +33,9 @@
     <ClInclude Include="debug.h">
       <Filter>File di origine</Filter>
     </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>File di intestazione\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -34,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="ScyllaTest.cpp">
       <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>File di origine\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

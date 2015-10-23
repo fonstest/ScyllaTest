@@ -13,6 +13,8 @@
 #include <tlhelp32.h>
 #include <tchar.h>
 #include <psapi.h> 
+#include "Log.h"
+
 
 
 

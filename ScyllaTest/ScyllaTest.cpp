@@ -31,9 +31,9 @@ Load Scylla library from dll and importing usefull functions
 **/
 void LoadScyllaLibrary(){
 	#ifdef _WIN64
-		hScylla = LoadLibraryW(L"../ScyllaDLLx64.dll");
+		hScylla = LoadLibraryW(L"./ScyllaDLLx64.dll");
 	#else
-		hScylla = LoadLibraryW(L"../ScyllaDLLx86.dll");
+		hScylla = LoadLibraryW(L"./ScyllaDLLx86.dll");
 	#endif
 		INFO("Loading scylla\n ");
 		if (hScylla)
@@ -123,6 +123,9 @@ void IATAutoFix(DWORD pid, DWORD_PTR oep, WCHAR *outputFile)
 	
 }
 
+/**
+Extract the .EXE file which has lauched the process having PID pid
+**/
 BOOL GetFilePathFromPID(DWORD dwProcessId, WCHAR *filename){
 	
 	HANDLE processHandle = NULL;
